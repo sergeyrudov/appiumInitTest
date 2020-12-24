@@ -1,6 +1,7 @@
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.remote.MobileCapabilityType;
+import io.appium.java_client.service.local.AppiumDriverLocalService;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.io.File;
@@ -16,6 +17,8 @@ public class Base {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "SM_N975U1");
         capabilities.setCapability(MobileCapabilityType.APP, fs.getAbsolutePath());
+        AppiumDriverLocalService.buildDefaultService().start();
+
         AndroidDriver<AndroidElement> driver = new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
         return driver;
     }
