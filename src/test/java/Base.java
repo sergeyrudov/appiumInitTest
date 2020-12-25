@@ -17,9 +17,16 @@ public class Base {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "SM_N975U1");
         capabilities.setCapability(MobileCapabilityType.APP, fs.getAbsolutePath());
-        AppiumDriverLocalService.buildDefaultService().start();
 
-        AndroidDriver<AndroidElement> driver = new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
-        return driver;
+
+        var srv = AppiumDriverLocalService.buildDefaultService();
+
+
+        if (srv.isRunning()) {
+            return new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+        } else {
+            throw new RuntimeException("appium isn't started");
+        }
+
     }
 }
